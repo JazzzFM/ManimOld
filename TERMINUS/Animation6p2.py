@@ -8,7 +8,7 @@ PRODUCT_COLOR = YELLOW
 class ThreeLines(ReconfigurableScene):
     DR = np.array([3,0,0])
     CONFIG = {
-        "start_x" : 0,
+        "start_x" : 3,
         "max_x" : 6000,
         "min_x" : 0,
         "top_x" : 2,
@@ -21,6 +21,7 @@ class ThreeLines(ReconfigurableScene):
                 "func_label" : "S",
                 "triangle_color" : WHITE,
                 "center_y" : 3,
+                "center_x" : 3,
                 "x_min" : 0,
                 "x_max" : 6000,
                 "numbers_to_show" : [0, 1000, 2000, 3000, 4000, 5000, 6000],
@@ -37,28 +38,20 @@ class ThreeLines(ReconfigurableScene):
         self.add(image)
 
         Labela = TextMobject("$x(m)$")
-        Labela.move_to(np.array([3.5, 3, 0]))
+        Labela.move_to(np.array([4.5, 3, 0]))
         self.add(Labela)
 
         self.line_group = self.get_line_group(self.start_x)
         lines, labels = self.line_group
 
         for line in lines:
-            self.play(Write(line, run_time = 0.5))
-        self.wait()
+            self.play(Write(line.move_to(np.array([0,2.5,0])), run_time = 0.5))
+        self.wait(1)
 
         last_label = labels[0].copy()
-        last_label.to_corner(UP+DR)
+        last_label.move_to(np.array([3,3,0]))
         last_label.set_fill(opacity = 0)
-        
-        for label in labels:
-            self.play(ReplacementTransform(
-                last_label.copy(), label
-            ))
-            self.wait()
-            last_label = label
-        
-        
+        self.animate_x_change(0, run_time=2)        
         self.animate_x_change(400, run_time=1)
         self.animate_x_change(1100, run_time=2)
         self.animate_x_change(2500, run_time=2)

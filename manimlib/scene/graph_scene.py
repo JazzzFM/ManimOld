@@ -34,7 +34,7 @@ class GraphScene(Scene):
         "x_leftmost_tick": None,  # Change if different from x_min
         "x_labeled_nums": None,
         "x_axis_label": "$x$",
-        "y_min": -1,
+        "y_min": -2,
         "y_max": 10,
         "y_axis_height": 6,
         "y_tick_frequency": 1,
@@ -217,7 +217,7 @@ class GraphScene(Scene):
         )
         label.shift_onto_screen()
         return label
-
+    
     def get_riemann_rectangles(
         self,
         graph,
@@ -292,13 +292,13 @@ class GraphScene(Scene):
         numerator = max(t_max - t_min, 0.0001)
         dx = float(numerator) / self.num_rects
         return self.get_riemann_rectangles(
-            graph,
-            x_min=t_min,
-            x_max=t_max,
+        graph, get_secant_slope_group, 
+        x_min=t_min,
+        x_max=t_max,
             dx=dx,
             stroke_width=0,
         ).set_fill(opacity=self.area_opacity)
-
+    
     def transform_between_riemann_rects(self, curr_rects, new_rects, **kwargs):
         transform_kwargs = {
             "run_time": 2,

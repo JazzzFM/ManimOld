@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from big_ol_pile_of_manim_imports import *
 
 # To watch one of these scenes, run the following:
@@ -13,32 +11,37 @@ from big_ol_pile_of_manim_imports import *
 # Use -n <number> to skip ahead to the n'th animation of a scene.
 
 
-class OpeningManimExample(Scene):
+class QuantumHispano(Scene):
     def construct(self):
-        title = TextMobject("This is some \\LaTeX")
-        basel = TexMobject(
-            "\\sum_{n=1}^\\infty "
-            "\\frac{1}{n^2} = \\frac{\\pi^2}{6}"
-        )
-        VGroup(title, basel).arrange_submobjects(DOWN)
+        image = ImageMobject("/home/jazzzfm/Documents/QuantumHisp/eduquantum_1.png")
+        image.scale(2)
+        
+        title = TextMobject("QuantumHispano")
+        text = TextMobject("La comunidad de cómputo \\\\"
+                          "cuántico de Latino América")
+        
+        VGroup(title, text).arrange_submobjects(DOWN)
+        
         self.play(
             Write(title),
-            FadeInFrom(basel, UP),
+            FadeInFrom(text, UP),
         )
         self.wait()
 
-        transform_title = TextMobject("That was a transform")
+        transform_title = TextMobject("Esta es una transformación")
         transform_title.to_corner(UP + LEFT)
+        
         self.play(
             Transform(title, transform_title),
-            LaggedStart(FadeOutAndShiftDown, basel),
+            LaggedStart(FadeOutAndShiftDown, text),
         )
         self.wait()
 
         grid = NumberPlane()
-        grid_title = TextMobject("This is a grid")
+        grid_title = TextMobject("Este es un plano")
         grid_title.scale(1.5)
         grid_title.move_to(transform_title)
+
 
         self.add(grid, grid_title)  # Make sure title is on top of grid
         self.play(
@@ -46,14 +49,16 @@ class OpeningManimExample(Scene):
             FadeInFromDown(grid_title),
             Write(grid),
         )
+        self.play(FadeIn(image))
         self.wait()
 
         grid_transform_title = TextMobject(
-            "That was a non-linear function \\\\"
-            "applied to the grid"
+            "Esta es una función no-linear \\\\"
+            "Aplicada al plano"
         )
         grid_transform_title.move_to(grid_title, UL)
         grid.prepare_for_nonlinear_transform()
+        
         self.play(
             grid.apply_function,
             lambda p: p + np.array([
