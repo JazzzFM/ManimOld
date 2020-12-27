@@ -5,6 +5,7 @@ DISTANCE_COLOR = BLUE
 TIME_COLOR = YELLOW
 VELOCITY_COLOR = GREEN
 
+# Construccion de gráficas - Derivación e integración
 # Objetivo: 
 #   Construir   gradualmente   tres   graficas   al   mismo   tiempo:posición-tiempo, velocidad tiempo y aceleracion tiempo.
 #   De esa manerase visualiza que las dos ultimas surgen de la derivada de la anterior.
@@ -12,14 +13,15 @@ VELOCITY_COLOR = GREEN
 #    Construir la curva de cada una con diferente color. 
 #    Indicar   con   línea   punteada   los   puntos   donde   los   movimientos cambian.
 
-class AnimationEight3(GraphScene):
+class AnimationEight1(GraphScene):
     CONFIG = {
         "x_min" : 0,
-        "x_max" : 10,
-        "x_labeled_nums" : list(range(1, 11)),
+        "x_max" : 40,
+        "x_labeled_nums" : list(range(1, 40)),
         "x_axis_label" : "t(s)",
         "y_min" : 0,
-        "y_max" : 100,
+        "y_max" : 50,
+        "x_labeled_nums" : list(range(1, 50)),
         "y_tick_frequency" : 10,
         "y_axis_label" : "$a(\\frac{m}{s^2})$",
         "graph_origin" : 2*DOWN + 5*LEFT,
@@ -35,10 +37,10 @@ class AnimationEight3(GraphScene):
         "secant_line_length" : 10,  
     }
     def construct(self):
- #       image = ImageMobject("/home/jazzzfm/ManimOld/Fondos/stars.jpg")
+        #image = ImageMobject("/home/jazzzfm/ManimOld/Fondos/stars.jpg")
         title = TextMobject("Gráfica aceleración-tiempo")
-#        image.scale(6)
-#        self.add(image)
+        #image.scale(6)
+        #self.add(image)
         title.move_to(np.array([0.3, 2.0,0]))
         self.add(title)
         self.setup_axes()
