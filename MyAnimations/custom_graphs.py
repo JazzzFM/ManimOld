@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from big_ol_pile_of_manim_imports import *
+=======
+from manimlib.imports import *
+>>>>>>> e2891ae7a4b6d3974be4cf1f7d9b109d7271322d
 
 #    __                  _   _                 
 #   / _|_   _ _ __   ___| |_(_) ___  _ __  ___ 

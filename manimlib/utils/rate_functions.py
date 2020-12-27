@@ -7,17 +7,6 @@ from manimlib.utils.simple_functions import sigmoid
 def linear(t):
     return t
 
-def animmeig(t):
-    if t>=0 and t<2:
-        return 5*(t**2)
-    if t>=2 and t<3:
-        return (30*t)-40
-    if t>=3 and t<5:
-        return 60-10*((t-4)**2)
-    if t>=5 and t<6:
-        return -30*t +200
-    if t>=6:
-        return 20/(t-5) 
 
 def smooth(t, inflection=10.0):
     error = sigmoid(-inflection / 2)
@@ -37,6 +26,7 @@ def rush_from(t, inflection=10.0):
 
 def slow_into(t):
     return np.sqrt(1 - (1 - t) * (1 - t))
+
 
 def double_smooth(t):
     if t < 0.5:

@@ -1,64 +1,61 @@
-from big_ol_pile_of_manim_imports import *
+#!/usr/bin/env python
+
+from manimlib.imports import *
 
 # To watch one of these scenes, run the following:
 # python -m manim example_scenes.py SquareToCircle -pl
 #
-# Use the flat -l for a faster rendering at a lower
+# Use the flag -l for a faster rendering at a lower
 # quality.
 # Use -s to skip to the end and just save the final frame
 # Use the -p to have the animation (or image, if -s was
 # used) pop up once done.
 # Use -n <number> to skip ahead to the n'th animation of a scene.
+# Use -r <number> to specify a resolution (for example, -r 1080
+# for a 1920x1080 video)
 
 
-class QuantumHispano(Scene):
+class OpeningManimExample(Scene):
     def construct(self):
-        image = ImageMobject("/home/jazzzfm/Documents/QuantumHisp/eduquantum_1.png")
-        image.scale(2)
-        
-        title = TextMobject("QuantumHispano")
-        text = TextMobject("La comunidad de cómputo \\\\"
-                          "cuántico de Latino América")
-        
-        VGroup(title, text).arrange_submobjects(DOWN)
-        
+        title = TextMobject("This is some \\LaTeX")
+        basel = TexMobject(
+            "\\sum_{n=1}^\\infty "
+            "\\frac{1}{n^2} = \\frac{\\pi^2}{6}"
+        )
+        VGroup(title, basel).arrange(DOWN)
         self.play(
             Write(title),
-            FadeInFrom(text, UP),
+            FadeInFrom(basel, UP),
         )
         self.wait()
 
-        transform_title = TextMobject("Esta es una transformación")
+        transform_title = TextMobject("That was a transform")
         transform_title.to_corner(UP + LEFT)
-        
         self.play(
             Transform(title, transform_title),
-            LaggedStart(FadeOutAndShiftDown, text),
+            LaggedStart(*map(FadeOutAndShiftDown, basel)),
         )
         self.wait()
 
         grid = NumberPlane()
-        grid_title = TextMobject("Este es un plano")
+        grid_title = TextMobject("This is a grid")
         grid_title.scale(1.5)
         grid_title.move_to(transform_title)
-
 
         self.add(grid, grid_title)  # Make sure title is on top of grid
         self.play(
             FadeOut(title),
             FadeInFromDown(grid_title),
-            Write(grid),
+            ShowCreation(grid, run_time=3, lag_ratio=0.1),
         )
-        self.play(FadeIn(image))
         self.wait()
 
         grid_transform_title = TextMobject(
-            "Esta es una función no-linear \\\\"
-            "Aplicada al plano"
+            "That was a non-linear function \\\\"
+            "applied to the grid"
         )
         grid_transform_title.move_to(grid_title, UL)
         grid.prepare_for_nonlinear_transform()
-        
         self.play(
             grid.apply_function,
             lambda p: p + np.array([
@@ -101,14 +98,14 @@ class WarpSquare(Scene):
 class WriteStuff(Scene):
     def construct(self):
         example_text = TextMobject(
-            "This is a some text",
+            "This is some text",
             tex_to_color_map={"text": YELLOW}
         )
         example_tex = TexMobject(
             "\\sum_{k=1}^\\infty {1 \\over k^2} = {\\pi^2 \\over 6}",
         )
         group = VGroup(example_text, example_tex)
-        group.arrange_submobjects(DOWN)
+        group.arrange(DOWN)
         group.set_width(FRAME_WIDTH - 2 * LARGE_BUFF)
 
         self.play(Write(example_text))
@@ -116,7 +113,7 @@ class WriteStuff(Scene):
         self.wait()
 
 
-class UdatersExample(Scene):
+class UpdatersExample(Scene):
     def construct(self):
         decimal = DecimalNumber(
             0,
