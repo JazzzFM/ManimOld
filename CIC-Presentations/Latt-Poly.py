@@ -51,7 +51,9 @@ class NTRU_PolyConv(Scene):
         self.play(FadeOut(title), FadeOut(t1), FadeOut(t2), FadeOut(t3), FadeOut(t4), FadeOut(t5), FadeOut(t6), FadeOut(t7),
                   FadeOut(t8), FadeOut(t9), FadeOut(t10))
         self.wait(1)
+        
         ##########################################################
+        
         t1.move_to(pos)
         self.play(FadeIn(t1))
         self.wait(3)
