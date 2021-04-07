@@ -69,6 +69,12 @@ class CoordinateSystem():
             edge, direction, **kwargs
         )
 
+    def get_z_axis_label(self, label_tex, edge=OUT, direction=DR, **kwargs):
+        return self.get_axis_label(
+            label_tex, self.get_z_axis(),
+            edge, direction, **kwargs
+        )
+
     def get_axis_label(self, label_tex, axis, edge, direction, buff=MED_SMALL_BUFF):
         label = TexMobject(label_tex)
         label.next_to(
@@ -84,6 +90,14 @@ class CoordinateSystem():
             self.get_y_axis_label(y_label_tex),
         )
         return self.axis_labels
+
+    def get_axis_labels3D(self, x_label_tex="x", y_label_tex="y", z_label_tex="z"):
+        self.axis_labels3D = VGroup(
+            self.get_x_axis_label(x_label_tex),
+            self.get_y_axis_label(y_label_tex),
+            self.get_z_axis_label(z_label_tex)
+        )
+        return self.axis_labels3D
 
     def get_graph(self, function, **kwargs):
         x_min = kwargs.pop("x_min", self.x_min)

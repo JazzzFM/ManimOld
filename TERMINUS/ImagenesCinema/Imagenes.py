@@ -1,5 +1,4 @@
 from manimlib.imports import *
-from manimCSV import *
 
 class ImagenTwo(GraphScene):
     centro = np.array((-4,-3.5,0))
@@ -437,19 +436,6 @@ class ImagenTenV2(GraphScene):
         #self.add(path)
         self.add(dots)
 
-    def return_coords_from_csv(self,file_name):
-        import csv
-        coords = []
-        with open(f'{file_name}.csv', 'r') as csvFile:
-            reader = csv.reader(csvFile)
-            for row in reader:
-                x,y = row
-                coord = [float(x),float(y)]
-                coords.append(coord)
-        csvFile.close()
-        return coords
-
-
     def setup_axes(self):
         GraphScene.setup_axes(self)
         # Y parametters
@@ -883,6 +869,9 @@ class Imagen22(GraphScene):
         self.setup_axes()
         graph = self.get_graph(lambda x : -5*x*(x-2), color = BLUE, x_min = -0.3, x_max = 2.3)
         dots = []
+        coords = [[px,py] for px,py in zip(x,y)]
+        points = self.get_points_from_coords(coords)
+        dots = self.get_dots_from_coords(coords)
 
         self.add(graph)
 
@@ -934,16 +923,19 @@ class Imagen23(GraphScene):
 
 class Imagen24(GraphScene):
     CONFIG = {
-        "y_max" :  10,
-        "y_min" : -1,
-        "x_max" :  5,
-        "x_min" : -5,
-        "y_tick_frecuency" : 1,
-        "axes_color" : WHITE,
-        "graph_orgin" : np.array([4, -1, 0]),
+        "y_max" :  8,
+        "y_min" : -3,
+        "x_max" :  4,
+        "x_min" : -2,
+        "y_tick_frequency" : 1,
+        "x_tick_frequency" : 1,
+        "axes_color" : WHITE, 
+        "graph_origin" : np.array((-1.5,-1.5,0)),
         "x_axis_label" : "t(s)",
-        "y_axis_label" : "x(m)"
-        }
+        "y_axis_label" : "x(m)",
+        "y_labeled_nums": range(-1, 8, 2),
+        "x_labeled_nums": [-2, -1, 0, 1, 2, 3, 4]
+    }
     def construct(self):
         fondo = ImageMobject("/home/jazzzfm/ManimOld/Fondos/dark.jpg")
         fondo.scale(4)
@@ -951,16 +943,380 @@ class Imagen24(GraphScene):
         image.scale(0.8)
         image.set_color(WHITE)
         image.move_to(np.array([-5.5, 3.0, 0]))
+        
+        T =  TexMobject("x(t) = -\\frac{5}{3}x^{3} + 5x^{2}")
+        T.move_to(np.array([3, 3,0]))
 
         self.add(fondo, image)
         self.setup_axes()
-        graph = self.get_graph(lambda x : ((-5/3)*x*x*x) + 5*(x*x), color = BLUE, x_min = -10, x_max = 10)
-        self.add(graph)
+        
+        graph = self.get_graph(lambda x : ((-5/3)*x*x*x) + 5*(x*x), color = BLUE, x_min = -1.1, x_max = 3.15)
+        self.add(graph, T)
 
+
+class Imagen25(GraphScene):
+    CONFIG = {
+        "y_max" :  10,
+        "y_min" :  -5,
+        "x_max" :  12,
+        "x_min" : 0,
+        "y_tick_frequency" : 2,
+        "x_tick_frequency" : 1,
+        "axes_color" : WHITE,
+        "graph_origin" : np.array((-5.5,-1.5,0)),
+        "x_axis_label" : "t(s)",
+        "y_axis_label" : "x(m)",
+        }
+    def construct(self):
+        fondo = ImageMobject("/home/jazzzfm/ManimOld/Fondos/dark.jpg")
+        fondo.scale(4)
+        image = ImageMobject("/home/jazzzfm/ManimOld/Fondos/T20a.png")
+        image.scale(0.8)
+        image.set_color(WHITE)
+        image.move_to(np.array([5.5, 2.5, 0]))
+
+
+        self.add(fondo, image)
+        self.setup_axes()
+
+        graph = self.get_graph(lambda x : 10 - (x-5)*(x-5)/2.5 , color = BLUE, x_min = 0, x_max = 11)
+        
+        d1 = Dot().set_color(BLUE).move_to(np.array((-5.5,-1.5,0)))
+        y_v1 = Arrow(np.array([-5.5, -1.5, 0]), np.array([-5.5, 0.0, 0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        x_v1 = Arrow(np.array([-5.5, -1.5, 0]), np.array([-4.5, -1.5, 0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        v_v1 = Arrow(np.array([-5.5, -1.5, 0]), np.array([-4.7, 0, 0]), buff = 0, stroke = 0.5).set_color(RED) 
+        c1 = Arc(radius = 0.8, arc_center = np.array((-5.5,-1.5,0)), start_angle = 0, angle = (0.33)*PI, color = "RED")
+        
+        d2 = Dot().set_color(BLUE).move_to(np.array((-4.0, 1.08,0)))
+        y_v2 = Arrow(np.array([-4.0, 1.08,0]), np.array([-4.0, 2.2, 0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        x_v2 = Arrow(np.array([-4.0, 1.08,0]), np.array([-3.0, 1.08, 0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        v_v2 = Arrow(np.array([-4.0, 1.08,0]), np.array([-3.0, 2.2, 0]), buff = 0, stroke = 0.5).set_color(RED)
+        c2 = Arc(radius = 0.8, arc_center = np.array((-4.0, 1.08,0)), start_angle = 0, angle = (0.27)*PI, color = "RED")
+
+        d3 = Dot().set_color(BLUE).move_to(np.array((-1.8, 2.5, 0)))
+        v_v3 = Arrow(np.array([-1.8, 2.5,0]), np.array([-0.8, 2.5, 0]), buff = 0, stroke = 0.5).set_color(RED)
+        
+        d4 = Dot().set_color(BLUE).move_to(np.array((0.5, 1.08,0)))
+        y_v4 = Arrow(np.array([0.5, 1.08, 0]), np.array([0.5, 0.0, 0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        x_v4 = Arrow(np.array([0.5, 1.08, 0]), np.array([1.3, 1.08,0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        v_v4 = Arrow(np.array([0.5, 1.08, 0]), np.array([1.3, 0.0,0]), buff = 0, stroke = 0.5).set_color(RED)
+        c4 = Arc(radius = 0.7, arc_center = np.array((0.5, 1.08, 0)), start_angle = 0, angle = -(0.3)*PI, color = "RED")
+        
+        d5 = Dot().set_color(BLUE).move_to(np.array((2.0, -1.5,0)))
+        y_v5 = Arrow(np.array([2.0, -1.5,0]), np.array([2.0, -2.8,0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        x_v5 = Arrow(np.array([2.0, -1.5,0]), np.array([2.8, -1.5,0]), buff = 0, stroke = 0.5).set_color(GREEN)
+        v_v5 = Arrow(np.array([2.0, -1.5,0]), np.array([2.6, -2.8,0]), buff = 0, stroke = 0.5).set_color(RED)
+        c5 = Arc(radius = 0.7, arc_center = np.array((2.0, -1.5,0)), start_angle = 0, angle = -(0.35)*PI, color = "RED")
+
+        T1 = TexMobject("M(\\frac{r}{2}, h)").move_to(d3.get_center() + np.array([0.0, 0.5, 0.0]))
+        T1.scale(0.7)
+        
+
+        T2 = TextMobject("Altura máxima: h").move_to(d2.get_center() + np.array([2.3, -0.5, 0.0]))
+        T2.scale(0.7)
+
+        v_1 = Arrow(np.array((-1.8, 0.7, 0)), np.array((-1.8,  2.4, 0)), buff = 0, stroke = 0.5).set_color("#000080")
+        v_2 = Arrow(np.array((-1.8, 0.3, 0)), np.array((-1.8, -1.3, 0)), buff = 0, stroke = 0.5).set_color("#000080") 
+        v_3 = Arrow(np.array((-3.2,-2.0,0)), np.array((-5.5, -2.0,0)), buff = 0, stroke = 0.5).set_color("#000080")
+        v_4 = Arrow(np.array((0.2, -2.0,0)), np.array((2.0, -2.0,0)), buff = 0, stroke = 0.5).set_color("#000080")
+
+        T3 = TextMobject("N(r, 0)").move_to(d5.get_center() + np.array([0.5, 0.5, 0]))
+        T3.scale(0.7)
+        
+        T4 = TextMobject("Distancia Máxima: r").move_to(d1.get_center() + np.array([4.0, -0.5, 0.0]))
+        T4.scale(0.7)
+
+        Tv = TexMobject("\\mathbf{v}_t").move_to(v_v1.get_end() + np.array([-0.4, 0, 0]))
+        Tv.scale(0.7)
+
+        a  = TexMobject("\\alpha").move_to(d1.get_center() + np.array([-0.5, 0.5, 0.0]))
+        a.scale(0.7)
+        
+        self.add(graph,
+                 c1, y_v1, x_v1, v_v1, d1, 
+                 c2, y_v2, x_v2, v_v2, d2,
+                 v_v3, d3, T1, T2, T3, T4, 
+                 a, Tv, v_1, v_2, v_3, v_4,
+                 c4, y_v4, x_v4, v_v4, d4,
+                 c5, y_v5, x_v5, v_v5, d5
+                 )
+
+import numpy as np
+
+pi = 3.1415926535897932384626
+twoPi = 2 * pi
+
+def Vector3D(x, y, z):
+    return np.array([x, y, z])
+
+def printVector3D(v):
+    s = "("
+    s += str(v[0]) + ", " + str(v[1]) + ", " + str(v[2]) + ")"   
+    return s
+
+def mapVector3D(v, R, r):
+    return Vector3D((R - r*np.cos(v[0])) * np.cos(v[1]), (R - r*np.cos(v[0])) * np.sin(v[1]), r * np.sin(v[0]))
+
+def square(v0, v1, v2, v3):
+    return [v0, v1, v2, v3]
+
+Vanilla = "#3B3B3E"
+
+class EFieldInThreeD(ThreeDScene):
+    CONFIG = {
+        "plane_kwargs" : { "color" : RED_B},
+        "point_charge_loc" : 0.5*RIGHT-1.5*UP
+        }
+    def construct(self):
+        self.set_camera_position(0.1, -np.pi/2)
+        plane = NumberPlane(**self.plane_kwargs)
+        plane.main_lines.fade(.9)
+        plane.add(plane.get_axis_labels())
+        self.add(plane)
+ 
+        field2D = VGroup(*[self.calc_field2D(x*RIGHT+y*UP)  
+            for x in np.arange(-9,9,1)
+                for y in np.arange(-5,5,1)
+        ])
+ 
+        field3D = VGroup(*[self.calc_field3D(x*RIGHT+y*UP+z*OUT)
+            for x in np.arange(-9,9,1)
+                for y in np.arange(-5,5,1)
+                    for z in np.arange(-5,5,1)])
+ 
+        self.play(ShowCreation(field3D))
+        self.wait()
+        self.move_camera(0.8*np.pi/2, -0.45*np.pi)
+        self.begin_ambient_camera_rotation()
+        self.wait(6)
+ 
+        def calc_field2D(self,point):
+            x,y = point[:2]
+            Rx,Ry = self.point_charge_loc[:2]
+            r = math.sqrt((x-Rx)**2 + (y-Ry)**2)
+            efield = (point - self.point_charge_loc)/r**3
+            return Vector(efield).shift(point)
+ 
+        def calc_field3D(self,point):
+            x,y,z = point
+            Rx,Ry,Rz = self.point_charge_loc
+            r = math.sqrt((x-Rx)**2 + (y-Ry)**2+(z-Rz)**2)
+            efield = (point - self.point_charge_loc)/r**3
+            return Vector(efield).shift(point)
+
+def Vectores3D(ThreeDScene):
+    CONFIG={
+        "camera_config":{"background_color" : Vanilla}
+    }
+    def construct(self):
+        self.wait(1)
+
+class Example(SpecialThreeDScene):
+    def construct(self):
+        axes = ThreeDAxes()
+        axes.set_color(WHITE)
+        self.add(axes)      
+
+        self.set_camera_orientation(phi = 75 * DEGREES, theta = 45 * DEGREES) #0   -90
+
+        def Polygon3D(listOfPoints, z, aes_color = RED,opacity = 0.5):
+            H1 =   listOfPoints
+            H2 =   []
+            for i in range(len(H1)):
+                H2.append([H1[i][0],H1[i][1],(H1[i][2]+z)])
+
+            S=[]
+
+            for i in range(len(H2)-1):
+                s1= [(H2[i][0],H2[i][1],H2[i][2]),
+                    (H2[i+1][0],H2[i+1][1],H2[i+1][2]),
+                    (H2[i+1][0],H2[i+1][1],H1[i+1][2]),
+                    (H2[i][0],H2[i][1],H1[i][2])]
+                S.append(Polygon(*s1,fill_color=aes_color, fill_opacity=opacity, color=aes_color,stoke_width=0.1))
+
+
+            b = Polygon(*H1,fill_color=aes_color, fill_opacity=opacity, color=aes_color,stoke_width=0.1)
+            h = Polygon(*H2,fill_color=aes_color, fill_opacity=opacity, color=aes_color,stoke_width=0.1)
+            s = VGroup(*S)
+            poly3D = VGroup(*[b,h,s])
+            return poly3D
+
+
+        Hexagon =   [(0,0,0),   #P1
+                    (1,1,0),    #P2
+                    (2,1,0),    #P3
+                    (3,0,0),    #P4
+                    (2,-1,0),   #P5
+                    (1,-1,0)    #P6
+                    ]
+
+        
+        triangle = Polygon(
+                    np.array([0.0 , 0.0, 0.0]),
+                    np.array([0.2, 0.0, 0.0]), 
+                    np.array([0.2, 0.2, 0.0]),
+                    np.array([0.0 , 0.2, 0.0]),
+                    fill_colori = RED, fill_opacity = 1.0, color = RED,stoke_width=0.1)   
+        c_1 = Polygon(
+                    np.array([0.0 , 0.0, 0.0]),
+                    np.array([0.1, 0.1, 0.2]),  
+                    np.array([0.0, 0.2, 0.0]),
+                    fill_colori = RED, fill_opacity = 1.0, color = RED,stoke_width=0.1)
+
+        c_2 = Polygon(
+                    np.array([0.0 , 0.0, 0.0]),
+                    np.array([0.1, 0.1, 0.2]),  
+                    np.array([0.2, 0.0, 0.0]),
+                    fill_colori = RED, fill_opacity = 1.0, color = RED,stoke_width=0.1)
+        
+        c_3 = Polygon(
+                    np.array([0.2 , 0.0, 0.0]),
+                    np.array([0.1, 0.1, 0.2]),
+                    np.array([0.2, 0.2, 0.0]),
+                    fill_colori = RED, fill_opacity = 1.0, color = RED,stoke_width=0.1)
+        
+        c_4 = Polygon(
+                    np.array([0.2 , 0.2, 0.0]),
+                    np.array([0.1, 0.1, 0.2]),  
+                    np.array([0.0, 0.2, 0.0]),
+                    fill_colori = RED, fill_opacity = 1.0, color = RED,stoke_width=0.1)
+        
+        self.add(triangle, c_1, c_2, c_3, c_4)
+        
+        s = VGroup(*[triangle, c_1, c_2, c_3, c_4])
+        s.move_to(np.array([1,1,1]))
+        s.rotate(TAU/2)
+        self.add(s)
+
+
+
+        base = TexMobject("x\\hat{i}", "y\\hat{j}", "z\\hat{k}")
+        base[0].move_to(np.array([5, 0, 0.5]))
+        base[0].set_color(WHITE)
+        base[0].scale(1)
+        base[0].rotate(PI, axis = UP)
+
+        base[1].move_to(np.array([0, 5, 0.5]))
+        base[1].set_color(WHITE)
+        base[1].scale(1)
+        base[1].    rotate(PI/2, axis = UP)
+
+        base[2].move_to(np.array([0.5, 0, 3]))
+        base[2].set_color(WHITE)
+        base[2].scale(1)
+        base[2].rotate(PI/2, axis = UP)
+
+        base[0].rotate(PI/2, axis = RIGHT)
+        base[1].rotate(PI/2, axis = RIGHT)
+        base[2].rotate(PI/2, axis = RIGHT)
+
+        self.add(base)
+
+class ImagenTabla(GraphScene):
+    centro = np.array((-4,-3.5,0))
+    CONFIG = {
+        "y_max" : 30,
+        "y_min" : 0,
+        "x_max" : 10,
+        "x_min" : 0,
+        "y_tick_frequency" : 1, 
+        "axes_color" : WHITE,
+        "graph_origin" : centro,
+        "x_axis_label" : "$x$",
+        "y_axis_label" : "$y$",
+    }
+
+    def construct(self):
+        fondo = ImageMobject("/home/jazzzfm/ManimOld/Fondos/dark.jpg")
+        fondo.scale(4)
+        
+        image = ImageMobject("/home/jazzzfm/ManimOld/Fondos/T20a.png")
+        image.scale(0.8)
+        image.set_color(WHITE)
+        
+        image.move_to(np.array([-5.5, 3.0, 0]))
+        
+        table = ImageMobject("/home/jazzzfm/ManimOld/Fondos/equation.png")
+        table.set_color(WHITE)
+        table.scale(3)      
+        self.add(fondo, image, table)
+
+
+class ImagenFive(GraphFromData):
+    CONFIG = {
+        "y_max" : 6000,
+        "y_min" : 0.0,
+        "x_max" : 10,
+        "x_min" : 0.0,
+        "y_tick_frequency" : 1000,
+        "x_tick_frequency" : 1,
+        "axes_color" : WHITE,
+        "graph_origin" : np.array((-4.0,-3,0)),
+        "x_axis_label" : "$t(min)$",
+        "y_axis_label" : "$x(m)$",
+        "y_labeled_nums" : range(0, 7000, 1000),
+        "x_labeled_nums" : range(0, 10)
+        }
+    def construct(self):        
+        fondo = ImageMobject("/home/jazzzfm/ManimOld/Fondos/dark.jpg")
+        fondo.scale(4)
+        image = ImageMobject("/home/jazzzfm/ManimOld/Fondos/T20a.png")
+        image.scale(0.8)
+        image.set_color(WHITE)
+        image.move_to(np.array([-6.2, 2.5, 0]))
+
+        self.add(fondo, image)
+        self.setup_axes()
+
+        Text = TexMobject("\\vec{v} = \\frac{\\Delta x}{\\Delta t} = \\frac{x_{f} - x_{i}}{t_{f}-t_{i}}").scale(0.8)
+        Text.move_to(np.array([-1, 2.0, 0]))
+        self.add(Text)
+
+        x = [0 , 1, 2, 3,  4,  5,  6, 7, 8, 9]
+        y = [0, 400, 1100, 2500, 2650, 2650, 3500, 4600, 5500, 5600]
+        
+        puntos_x = [2, 5, 5, 9, 9]
+        puntos_y = [1100, 1100, 2650, 2650, 5600]
+
+        coords = [[px,py] for px,py in zip(x,y)]
+        points = self.get_points_from_coords(coords) 
+        dots = self.get_dots_from_coords(coords)
+        
+        coords_p = [[px,py] for px,py in zip(puntos_x, puntos_y)]
+        points_p = self.get_points_from_coords(coords_p)
+        dots_p = self.get_dots_from_coords(coords_p).set_color(BLUE)
+        
+        Line1 = Line(dots_p[0], dots_p[1].get_end()- np.array([0.1, 0, 0]),  stroke_width= 2)
+        Line2 = Line(dots_p[0], dots_p[2], stroke_width= 2)
+        Line3 = Line(dots_p[1].get_end()- np.array([0.12, 0, 0]), dots_p[2], stroke_width= 2)
+        
+        Line4 = Line(dots_p[2], dots_p[3].get_end()- np.array([0.1, 0, 0]), stroke_width= 2)
+        Line5 = Line(dots_p[2], dots_p[4], stroke_width= 2)
+        Line6 = Line(dots_p[3].get_end()- np.array([0.12, 0, 0]), dots_p[4], stroke_width= 2)
+        
+        dx_1 = TexMobject("\\Delta x").scale(0.8)
+        dx_2 = TexMobject("\\Delta x").scale(0.8)
+        
+        dx_1.move_to(Line3.get_center() + np.array([0.4, 0, 0]))
+        dx_2.move_to(Line6.get_center() + np.array([0.4, 0, 0]))
+         
+        dt_1 = TexMobject("\\Delta t").scale(0.8)
+        dt_2 = TexMobject("\\Delta t").scale(0.8)
+        
+        dt_1.move_to(Line1.get_center() - np.array([0, 0.4, 0]))
+        dt_2.move_to(Line4.get_center() - np.array([0, 0.4, 0]))
+
+        graph = DiscreteGraphFromSetPoints(points,color=BLUE)
+
+        
+        self.add(Line1, Line2, Line3, Line4, Line5, Line6, graph, dots, dx_1, dx_2, dt_1, dt_2)
+    
     def setup_axes(self):
         GraphScene.setup_axes(self)
-        init_label_y = -1
-        end_label_y = 10
-        step_y = 1
+        init_label_y = 0
+        end_label_y = 6000
+        step_y = 1000
         self.y_axis.label_direction = LEFT
         self.play(Write(self.x_axis),Write(self.y_axis))
+
+
