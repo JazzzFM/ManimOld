@@ -1,0 +1,43 @@
+*.pyc
+*.bak
+.DS_Store
+homeless.py
+playground.py
+cairo_test.py
+mayavi_test.py
+random_scenes/
+files/
+<<<<<<< HEAD
+=======
+assets/
+>>>>>>> e2891ae7a4b6d3974be4cf1f7d9b109d7271322d
+ben_playground.py
+ben_cairo_test.py
+.floo
+.flooignore
+.vscode
+<<<<<<< HEAD
+*.xml
+*.iml
+media
+/media
+manim.sublime-project
+manim.sublime-workspace
+
+primes.py
+/media_dir.txt
+=======
+.vs
+*.xml
+*.iml
+media
+manim.sublime-project
+manim.sublime-workspace
+.eggs/
+build/
+dist/
+manim.egg-info/
+
+primes.py
+/media_dir.txt
+>>>>>>> e2891ae7a4b6d3974be4cf1f7d9b109d7271322d
