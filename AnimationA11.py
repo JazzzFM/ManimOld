@@ -773,7 +773,7 @@ class Dos(GraphScene, MovingCameraScene):
 
         self.wait()
         self.play(
-            ReplacementTransform(sen_2.copy(), ec_2[3])
+            ReplacementTransform(cos_2.copy(), ec_2[3])
         )
         
         self.wait()
@@ -783,7 +783,7 @@ class Dos(GraphScene, MovingCameraScene):
         )
         
         self.play(
-            ReplacementTransform(cos_2.copy(), ec_2[6])
+            ReplacementTransform(sen_2.copy(), ec_2[6])
         )
         self.wait(2)
         
